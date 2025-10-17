@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Interact
   layers:
   - Default
   - TransparentFX
@@ -11,8 +12,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Interactible
+  - Crops
   - 
   - 
   - 
@@ -50,11 +51,17 @@ TagManager:
   - name: Pits
     uniqueID: 3036115991
     locked: 0
+  - name: FertileGround
+    uniqueID: 3038763477
+    locked: 0
   - name: OutPit
     uniqueID: 1118032847
     locked: 0
   - name: Buildings
     uniqueID: 1165778851
+    locked: 0
+  - name: Crops
+    uniqueID: 1922074787
     locked: 0
   - name: Player
     uniqueID: 106294477
