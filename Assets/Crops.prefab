@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3090522380359414654}
   - component: {fileID: 3764971519550224882}
+  - component: {fileID: 950437777255373250}
   m_Layer: 7
   m_Name: Crops
   m_TagString: Untagged
@@ -73,14 +74,31 @@ SpriteRenderer:
   m_SortingLayerID: 1922074787
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.36440778, g: 0.9245283, b: 0.16135636, a: 1}
+  m_Sprite: {fileID: 1690374284, guid: 4ae18883b613deb459519e85e20a19ee, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &950437777255373250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086407386940794246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2832d3f9bd0f2fe47bbe526c6b90be13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToGrow: 60
+  cropSprites:
+  - {fileID: -1613420529, guid: 4ae18883b613deb459519e85e20a19ee, type: 3}
+  - {fileID: -649749098, guid: 4ae18883b613deb459519e85e20a19ee, type: 3}
+  - {fileID: -2138668219, guid: 4ae18883b613deb459519e85e20a19ee, type: 3}
