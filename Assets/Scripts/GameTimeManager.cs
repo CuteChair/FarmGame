@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class GameTimeManager : MonoBehaviour
 {
-    private float gameTime;
-
+    [Tooltip("How many seconds it takes for a minute to pass")]
+    [SerializeField] private float SecondsToMinutes;
+    private float gameSec;
+    private int gameMin;
+    private int gameHour;
     private int gameDay;
 
     [SerializeField] private TextMeshProUGUI timeTxt;
@@ -16,46 +19,92 @@ public class GameTimeManager : MonoBehaviour
     private DayStateEnum currentDayState;
     private void Update()
     {
-        gameTime += Time.deltaTime;
+        gameSec += Time.deltaTime;
 
-        timeTxt.text = gameTime.ToString();
+        CheckForMinutes();
+
+        timeTxt.text = HourDisplay() + ":" + MinuteDisplay();
+        dayTxt.text = gameDay.ToString();
+        dayStateTxt.text = currentDayState.ToString();
 
         DayNightCycle();
     }
 
+    private string MinuteDisplay()
+    {
+        if (gameMin < 10)
+            return $"0{gameMin}";
+        else
+            return $"{gameMin}";
+    }
+
+    private string HourDisplay()
+    {
+        if (gameHour < 10)
+            return $"0{gameHour}";
+        else
+            return $"{gameHour}";
+    }
+    private void CheckForMinutes()
+    {
+        if (gameSec >= SecondsToMinutes)
+        {
+            gameMin++;
+            gameSec = 0;
+            CheckForHours();
+        }
+    }
+
+    private void CheckForHours()
+    {
+        if (gameMin == 60)
+        {
+            gameMin = 0;
+            gameHour++;
+            CheckForDay();
+        }
+    }
+    private void CheckForDay()
+    {
+       if(gameHour == 24)
+        {
+            gameHour = 0;
+            gameDay++;
+        }
+    }
     private void DayNightCycle()
     {
-        if (gameTime >= 7 && gameTime < 11)
+        switch (gameHour)
         {
-            currentDayState = DayStateEnum.Morning;
-        }
-        else if (currentDayState != DayStateEnum.Noon && gameTime >= 11 && gameTime <= 13)
-        {
-            currentDayState = DayStateEnum.Noon;
-        }
-        else if (currentDayState != DayStateEnum.AfterNoon && gameTime > 13 && gameTime <= 19)
-        {
-            currentDayState = DayStateEnum.AfterNoon;
-        }
-        else if (currentDayState != DayStateEnum.Night && gameTime > 19)
-        {
-            currentDayState = DayStateEnum.Night;  
-        }
-
-        dayStateTxt.text = currentDayState.ToString();
-        if (gameTime >= 24)
-        {
-            SetDay();
+            case 0:
+                currentDayState = DayStateEnum.Night;
+                break;
+            case 6:
+                currentDayState = DayStateEnum.Morning;
+                break;
+            case 11:
+                currentDayState = DayStateEnum.Noon;
+                break;
+            case 13:
+                currentDayState = DayStateEnum.AfterNoon;
+                break;
+            case 20:
+                currentDayState = DayStateEnum.Night;
+                break;
+            default:
+                break;
         }
     }
-    private void SetDay()
+
+    public int GetHour()
     {
-        gameTime = 0f;
-        gameDay++;
-        dayTxt.text = gameDay.ToString();
-        print("Current Day : " + gameDay);
+        return gameHour;
     }
 
+    public float GetMin()
+    {
+        return gameMin;
+    }
     
 }
 
