@@ -31,6 +31,11 @@ public class PlayerMovements : MonoBehaviour
         transform.Translate(move * moveSpeed * Time.deltaTime);
     }
 
+    private void LateUpdate()
+    {
+        p_SR.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
+    }
+
     private void ChangePlayerOrientation()
     {
         bool w_Held = Input.GetKey(KeyCode.W);

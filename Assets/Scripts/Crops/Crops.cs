@@ -26,6 +26,11 @@ public class Crops : MonoBehaviour
         UpdateSprite();
     }
 
+    private void LateUpdate()
+    {
+        sR.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
+    }
+
     private void UpdateSprite()
     {
 
