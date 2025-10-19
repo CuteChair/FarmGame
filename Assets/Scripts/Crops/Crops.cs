@@ -8,11 +8,9 @@ public class Crops : MonoBehaviour
     private float thirdOfTime;
     private SpriteRenderer sR;
     [SerializeField] private Sprite[] cropSprites;
-    private GameTimeManager gameTimeManager;
 
     private void Awake()
     {
-        gameTimeManager = GameObject.FindGameObjectWithTag("Manager").GetComponentInChildren<GameTimeManager>();
         sR = GetComponent<SpriteRenderer>();
 
         thirdOfTime = timeToGrow * 0.33f;
@@ -21,7 +19,7 @@ public class Crops : MonoBehaviour
     private void Update()
     {
         timeToGrow -= Time.deltaTime;
-        print(timeToGrow);
+        //print(timeToGrow);
 
         UpdateSprite();
     }
@@ -36,17 +34,17 @@ public class Crops : MonoBehaviour
 
         if (timeToGrow > thirdOfTime * 2f)
         {
-            print("Sprout");
+            //print("Sprout");
             sR.sprite = cropSprites[0];
         }
         else if (timeToGrow > thirdOfTime)
         {
-            print("Mid Sprout");
+            //print("Mid Sprout");
             sR.sprite = cropSprites[1];
         }
         else
         {
-            print("Plant is ready");
+            //print("Plant is ready");
             sR.sprite = cropSprites[2];
         }
     }

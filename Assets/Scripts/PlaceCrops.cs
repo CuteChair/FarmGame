@@ -9,6 +9,8 @@ public class PlaceCrops : MonoBehaviour
     [SerializeField] private GameObject crops;
     [SerializeField] private LayerMask interactibleLayer;
 
+    private HashSet<Vector3Int> placedCropsLocations = new HashSet<Vector3Int>();
+
     private Tilemap tilemap;
     private Vector3Int lastHoveredCell;
 
@@ -44,11 +46,16 @@ public class PlaceCrops : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (tilemap.HasTile(cellPos))
+            if (tilemap.HasTile(cellPos) && !placedCropsLocations.Contains(cellPos))
             {
+                placedCropsLocations.Add(cellPos);
                 Vector2 cropsOffset = new Vector2(cellPos.x + 0.5f, cellPos.y + 0.5f);
-                Debug.Log("Clicked " + cellPos);
+                //Debug.Log("Clicked " + cellPos);
                 GameObject clone = Instantiate(crops, cropsOffset, Quaternion.identity);
+            }
+            else
+            {
+                print("Cant place crops here");
             }
         }
     }
