@@ -16,7 +16,7 @@ public class PlaceCrops : MonoBehaviour
 
     private void Awake()
     {
-        tilemap = GameObject.FindGameObjectWithTag("Interact").GetComponentInChildren<Tilemap>();
+        tilemap = GameObject.FindGameObjectWithTag("Interact").GetComponent<Tilemap>();
     }
 
     private void Update()

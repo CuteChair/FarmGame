@@ -43,30 +43,24 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Grass
-    uniqueID: 1115971619
-    locked: 0
-  - name: Paths
-    uniqueID: 757401195
-    locked: 0
-  - name: Pits
-    uniqueID: 3036115991
+  - name: Ground
+    uniqueID: 2655530219
     locked: 0
   - name: FertileGround
-    uniqueID: 3038763477
+    uniqueID: 2439132503
     locked: 0
-  - name: OutPit
-    uniqueID: 1118032847
+  - name: WalkInFront
+    uniqueID: 74268999
     locked: 0
-  - name: Buildings
-    uniqueID: 1165778851
-    locked: 0
-  - name: Crops
-    uniqueID: 1922074787
+  - name: Collision
+    uniqueID: 2767781689
     locked: 0
   - name: Player
-    uniqueID: 106294477
+    uniqueID: 3345910081
     locked: 0
-  - name: UI
-    uniqueID: 2341315635
+  - name: WalkBehind
+    uniqueID: 2488040429
+    locked: 0
+  - name: Decor
+    uniqueID: 3810760769
     locked: 0

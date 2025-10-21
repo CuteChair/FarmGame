@@ -8,6 +8,7 @@ public class PlayerMovements : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Sprite[] characterSprites;
+    [SerializeField] private Rigidbody2D rb;
     private SpriteRenderer p_SR;
 
     private float moveX => Input.GetAxisRaw("Horizontal");
@@ -16,6 +17,7 @@ public class PlayerMovements : MonoBehaviour
     private void Awake()
     {
         p_SR = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
     private void Start()
     {
@@ -26,11 +28,16 @@ public class PlayerMovements : MonoBehaviour
     {
         ChangePlayerOrientation();
 
-        Vector2 move = new Vector2(moveX, moveY).normalized;
-
-        transform.Translate(move * moveSpeed * Time.deltaTime);
+        
     }
 
+    private void FixedUpdate()
+    {
+        Vector2 move = new Vector2(moveX, moveY).normalized;
+
+        rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);
+        
+    }
     private void LateUpdate()
     {
         p_SR.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
