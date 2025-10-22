@@ -27,8 +27,6 @@ public class PlayerMovements : MonoBehaviour
     void Update()
     {
         ChangePlayerOrientation();
-
-        
     }
 
     private void FixedUpdate()
