@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,172 +7,118 @@ using UnityEngine;
 
 public class PlayerInventoryManager : MonoBehaviour
 {
-    private List<GameObject>[] playersInventory = new List<GameObject>[9];
-    [SerializeField] private GameObject[] placeHolders = new GameObject[10];
+    public static event Action<ItemData> OnSelectedItemEvent;
 
+    [SerializeField] private InventorySlot[] inventory = new InventorySlot[9];
+    private void OnEnable()
+    {
+        PickableItem.OnPickedUpItem += AddItem;
+        PlaceCrops.OnPlacedCropEvent += RemoveItem;
+    }
+
+    private void OnDisable()
+    {
+        PickableItem.OnPickedUpItem -= AddItem;
+        PlaceCrops.OnPlacedCropEvent -= RemoveItem;
+    }
     private void Awake()
     {
-        int test = 0;
-        for(int i = 0; i < playersInventory.Length; i++)
-        {
-            playersInventory[i] = new List<GameObject>();
-            test++;
-        }
-
-        print("Created : " + test + " lists");
+        for (int i = 0; i < inventory.Length; i++)
+            inventory[i] = new InventorySlot();
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            AddItem(placeHolders[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            AddItem(placeHolders[1]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            AddItem(placeHolders[2]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            AddItem(placeHolders[3]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            AddItem(placeHolders[4]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            AddItem(placeHolders[5]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            AddItem(placeHolders[6]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            AddItem(placeHolders[7]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            AddItem(placeHolders[8]);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            AddItem(placeHolders[9]);
-        }
-
         if (Input.GetKeyDown(KeyCode.P))
         {
-            ShowInventory();
+            //ShowInventory();
+        }
+
+        for (int i = 0; i < 9; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            {
+                SelectSlot(i);
+                break; 
+            }
         }
     }
-    private void AddItem(GameObject itemToAdd)
+
+    public bool Contains(ItemData item)
     {
-        print("1");
-        int emptySlotsChecker = 0;
-        //Checks if the players inventory is empty
-        for (int i = 0; i < playersInventory.Length; i++)
+        return inventory.Any(slot => !slot.IsEmpty && slot.item == item);
+    }
+
+    private void AddItem(ItemData itemToAdd)
+    {
+        if (itemToAdd == null)
         {
-            if (playersInventory[i].Count == 0)
-                emptySlotsChecker++;
-                
-        }
-        if (emptySlotsChecker == 9)
-        {
-            playersInventory[0].Add(itemToAdd);
-            print($"Inventory was empty : {itemToAdd} was add at : 0 : 0");
+            Debug.LogWarning("Tried to add a null item to inventory!");
             return;
         }
 
-        print("2");
-        //Checks if theres already a slot that contains the same gameobject
-        bool found = false;
-
-        for(int i = 0; i < playersInventory.Length; i++)
+        // Try stacking
+        foreach (var slot in inventory)
         {
-            if (playersInventory[i].Count != 0)
+            if (!slot.IsEmpty && slot.item == itemToAdd)
             {
-                if (playersInventory[i][0].gameObject == itemToAdd)
-                {
-                    playersInventory[i].Add(itemToAdd);
-                    found = true;
-                    print($"The same Game Object was found at slot : {i}! \nAdding {itemToAdd} to : {i}");
-                    break;
-                }
-            }
-            
-        }
-
-        if (found)
-            return;
-
-        print("3");
-        //Checks if theres an empty spots where the item can be placed
-        for (int i = 0; i < playersInventory.Length; i++)
-        {
-            if (playersInventory[i].Count == 0)
-            {
-                playersInventory[i].Add(itemToAdd);
-                print($"New item added to the inventory at slot : {i}!\nAdding {itemToAdd} there");
+                slot.AddItem(itemToAdd);
+                Debug.Log($"Stacked {itemToAdd.name}");
                 return;
             }
         }
 
-        print("Inventory is full : Cant add item");
-
-    }
-
-    private void ShowInventory()
-    {
-        for (int i = 0;i < playersInventory.Length; i++)
+        // Try finding empty slot
+        foreach (var slot in inventory)
         {
-            print($"Slot {i} : {string.Join(", ", playersInventory[i])}");
+            if (slot.IsEmpty)
+            {
+                slot.AddItem(itemToAdd);
+                Debug.Log($"Added a new item {itemToAdd.name}");
+                return;
+            }
         }
+
+        Debug.Log("Inventory is full");
     }
 
-    //------------------------------V1--------------------------------------------------
-    //[SerializeField] private List<GameObject> inventory = new List<GameObject>();
+    private void RemoveItem(ItemData itemToRemove)
+    {
+        foreach (var slot in inventory)
+        {
+            if (!slot.IsEmpty && slot.item == itemToRemove)
+            {
+                slot.quantity--;
 
-    //[SerializeField] private GameObject PlaceholderItem;
+                if (slot.quantity <= 0)
+                {
+                    slot.Clear();
+                    Debug.Log($"Used last item: {itemToRemove.name}");
+                        OnSelectedItemEvent?.Invoke(null);
+                    
+                }
+                else
+                {
+                    Debug.Log($"Removed one: {itemToRemove.name} (x{slot.quantity} left)");
+                }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //        AddItem(PlaceholderItem);
-    //    if (Input.GetKeyDown(KeyCode.R))
-    //        RemoveItem(PlaceholderItem);
-    //}
+                return;
+            }
+        }
 
-    //private void AddItem(GameObject item)
-    //{
-    //    inventory.Add(item);
-    //}
+        Debug.LogWarning($"Tried to remove {itemToRemove.name}, but it wasn't found in inventory!");
+    }
+    private void SelectSlot(int index)
+    {
+        if (index < 0 || index >= inventory.Length) return;
 
-    //private void RemoveItem(GameObject ObjectToRemove)
-    //{
-    //    if (inventory.Count == 0)
-    //    {
-    //        print("Inventory is empty");
-    //        return;
-    //    }    
+        InventorySlot selected = inventory[index];
+        if (selected.IsEmpty)
+        {
+            return;
+        }
 
-    //    bool found = false;
-
-    //    for (int i = 0; i < inventory.Count; i++)
-    //    {
-    //        if (inventory[i].gameObject == ObjectToRemove)
-    //        {
-    //            found = true;
-    //            inventory.RemoveAt(i);
-    //            break;
-    //        }
-    //    }
-
-    //    if (!found)
-    //        print("No object to remove in inventory");
-    //}
-
+        OnSelectedItemEvent?.Invoke(selected.item);
+        print($"Selected: {selected.item}");
+    }
+    
 }
