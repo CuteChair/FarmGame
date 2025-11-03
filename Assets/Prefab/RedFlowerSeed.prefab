@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5947780045944518361
+--- !u!1 &6893295038111569440
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2719713223286451235}
-  - component: {fileID: 5797889243257377381}
-  - component: {fileID: 64523948861444859}
+  - component: {fileID: 5793072801950660075}
+  - component: {fileID: 2791395158377791162}
+  - component: {fileID: 1391075642956462530}
   m_Layer: 7
-  m_Name: YellowFlower
+  m_Name: RedFlowerSeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2719713223286451235
+--- !u!4 &5793072801950660075
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5947780045944518361}
+  m_GameObject: {fileID: 6893295038111569440}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -18.57, y: 13.52, z: 0}
@@ -33,13 +33,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5797889243257377381
+--- !u!212 &2791395158377791162
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5947780045944518361}
+  m_GameObject: {fileID: 6893295038111569440}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -85,13 +85,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &64523948861444859
+--- !u!114 &1391075642956462530
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5947780045944518361}
+  m_GameObject: {fileID: 6893295038111569440}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2832d3f9bd0f2fe47bbe526c6b90be13, type: 3}
@@ -99,6 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToGrow: 60
   cropSprites:
-  - {fileID: -812253406, guid: 33137661f8f46744f94f23af3aeb42fe, type: 3}
-  - {fileID: -1696238627, guid: 33137661f8f46744f94f23af3aeb42fe, type: 3}
-  - {fileID: -1923393353, guid: 33137661f8f46744f94f23af3aeb42fe, type: 3}
+  - {fileID: 993757077, guid: eefaf9829225a5046834af2f98d06336, type: 3}
+  - {fileID: -1349820413, guid: eefaf9829225a5046834af2f98d06336, type: 3}
+  - {fileID: -1518671625, guid: eefaf9829225a5046834af2f98d06336, type: 3}
