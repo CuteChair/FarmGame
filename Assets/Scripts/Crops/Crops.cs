@@ -1,51 +1,64 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Crops : MonoBehaviour
 {
-    [SerializeField] private float timeToGrow;
-    private float thirdOfTime;
-    private SpriteRenderer sR;
-    [SerializeField] private Sprite[] cropSprites;
+    //public string CropID;
+    [SerializeField] private float totalGrowTime;
+    private float currentGrowTime;
+    [SerializeField] private Sprite[] growthSprites;
+
+    private SpriteRenderer spriteRenderer;
+    private int currentStage = -1;
 
     private void Awake()
     {
-        sR = GetComponent<SpriteRenderer>();
-
-        thirdOfTime = timeToGrow * 0.33f;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        currentGrowTime = totalGrowTime;
     }
 
     private void Update()
     {
-        timeToGrow -= Time.deltaTime;
-        //print(timeToGrow);
+        if (currentGrowTime <= 0f)
+            return;
 
-        UpdateSprite();
+        currentGrowTime -= Time.deltaTime;
+        UpdateVisual();
     }
 
     private void LateUpdate()
     {
-        sR.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
     }
 
-    private void UpdateSprite()
+    private void UpdateVisual()
     {
+        float growthPercent = 1f - (currentGrowTime / totalGrowTime);
+        int stage = Mathf.FloorToInt(growthPercent * growthSprites.Length);
+        stage = Mathf.Clamp(stage, 0, growthSprites.Length - 1);
 
-        if (timeToGrow > thirdOfTime * 2f)
+        if (stage != currentStage)
         {
-            //print("Sprout");
-            sR.sprite = cropSprites[0];
-        }
-        else if (timeToGrow > thirdOfTime)
-        {
-            //print("Mid Sprout");
-            sR.sprite = cropSprites[1];
-        }
-        else
-        {
-            //print("Plant is ready");
-            sR.sprite = cropSprites[2];
+            currentStage = stage;
+            spriteRenderer.sprite = growthSprites[currentStage];
         }
     }
+
+    public bool IsReadyToHarvest()
+    {
+        return currentGrowTime <= 0f;
+    }
+
+    public void SetGrowthTime(float timeElapsed)
+    {
+        currentGrowTime -= timeElapsed;      
+
+        if (currentGrowTime < 0f)
+            currentGrowTime = 0f;            
+
+        UpdateVisual();                      
+    }
+
 }

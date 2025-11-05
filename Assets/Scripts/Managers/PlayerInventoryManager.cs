@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class PlayerInventoryManager : MonoBehaviour
 {
+    public static PlayerInventoryManager Instance;
     public static event Action<ItemData> OnSelectedItemEvent;
 
     [SerializeField] private InventorySlot[] inventory = new InventorySlot[9];
@@ -23,8 +24,22 @@ public class PlayerInventoryManager : MonoBehaviour
     }
     private void Awake()
     {
-        for (int i = 0; i < inventory.Length; i++)
-            inventory[i] = new InventorySlot();
+        if (Instance == null)
+        {
+            print("First instance load");
+            for (int i = 0; i < inventory.Length; i++)
+                inventory[i] = new InventorySlot();
+        }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+       
     }
     private void Update()
     {

@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class PlaceCrops : MonoBehaviour
 {
     public static event Action<ItemData> OnPlacedCropEvent;
+    public static event Action<ItemData, Vector2> OnSaveCropEvent;
 
     [SerializeField] private GameObject selector;
     [SerializeField] private ItemData currentCropsData;
@@ -82,6 +83,8 @@ public class PlaceCrops : MonoBehaviour
             Vector2 cropsOffset = new Vector2(cellPos.x + 0.5f, cellPos.y + 0.5f);
             //Debug.Log("Clicked " + cellPos);
             Instantiate(obj, cropsOffset, Quaternion.identity);
+            //print(currentCropsData);
+            OnSaveCropEvent(currentCropsData, cropsOffset);
             OnPlacedCropEvent(currentCropsData);
         }
         else

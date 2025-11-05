@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameTimeManager : MonoBehaviour
 {
+    public static GameTimeManager Instance;
+
     [Tooltip("How many seconds it takes for a minute to pass")]
     [SerializeField] private float SecondsToMinutes;
     private float gameSec;
@@ -17,6 +19,18 @@ public class GameTimeManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dayStateTxt;
 
     private DayStateEnum currentDayState;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
     private void Update()
     {
         gameSec += Time.deltaTime;
@@ -105,7 +119,10 @@ public class GameTimeManager : MonoBehaviour
     {
         return gameMin;
     }
-    
+
+    public float GetGameTimeInSec() =>
+    (gameDay * 86400f) + (gameHour * 3600f) + (gameMin * 60f) + gameSec;
+
 }
 
 public enum DayStateEnum
