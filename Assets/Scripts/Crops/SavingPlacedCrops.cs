@@ -6,15 +6,15 @@ public class SavingPlacedCrops : MonoBehaviour
 {
     private void OnEnable()
     {
-        PlaceCrops.OnSaveCropEvent += AddToList;
+        
     }
 
     private void OnDisable()
     {
-        PlaceCrops.OnSaveCropEvent -= AddToList;
+        
     }
 
-    private void AddToList(ItemData data, Vector2 location)
+    private void AddToList(Vector3Int cellPos, ItemData data, Vector2 location)
     {
         //print(data + ", " + location);
         SaveCropData newCrop = new SaveCropData();
@@ -22,7 +22,7 @@ public class SavingPlacedCrops : MonoBehaviour
         newCrop.CropLocation = location;
         newCrop.GameTime = GameTimeManager.Instance.GetGameTimeInSec();
         //print("Data : " + newCrop.CropData + "| Location : " + newCrop.CropLocation);
-        SavedCropScene.Instance.AddToSave(newCrop);
+        SavedCropScene.Instance.AddCropToSave(cellPos, newCrop);
         
     }
 }

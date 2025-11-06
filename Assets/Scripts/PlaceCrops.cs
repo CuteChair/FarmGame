@@ -7,20 +7,19 @@ using UnityEngine.Tilemaps;
 public class PlaceCrops : MonoBehaviour
 {
     public static event Action<ItemData> OnPlacedCropEvent;
-    public static event Action<ItemData, Vector2> OnSaveCropEvent;
 
     [SerializeField] private GameObject selector;
     [SerializeField] private ItemData currentCropsData;
     [SerializeField] private LayerMask interactibleLayer;
 
-    private HashSet<Vector3Int> placedCropsLocations = new HashSet<Vector3Int>();
+    //private HashSet<Vector3Int> placedCropsLocations = new HashSet<Vector3Int>();
 
-    private Tilemap tilemap;
+    [SerializeField] private Tilemap tilemap;
     private Vector3Int lastHoveredCell;
 
     private void Awake()
     {
-        tilemap = GameObject.FindGameObjectWithTag("Interact").GetComponent<Tilemap>();
+       // tilemap = GameObject.FindGameObjectWithTag("Interact").GetComponent<Tilemap>();
         
     }
 
@@ -70,26 +69,27 @@ public class PlaceCrops : MonoBehaviour
         currentCropsData = obj;
     }
 
-    private void SetCurrentCropToNull()
-    {
-        currentCropsData = null;
-    }
-
     private void PlaceCrop(GameObject obj, Vector3Int cellPos)
     {
-        if (tilemap.HasTile(cellPos) && !placedCropsLocations.Contains(cellPos))
+        if (tilemap.HasTile(cellPos) && !SavedCropScene.Instance.CheckForPosition(cellPos))
         {
-            placedCropsLocations.Add(cellPos);
             Vector2 cropsOffset = new Vector2(cellPos.x + 0.5f, cellPos.y + 0.5f);
-            //Debug.Log("Clicked " + cellPos);
-            Instantiate(obj, cropsOffset, Quaternion.identity);
-            //print(currentCropsData);
-            OnSaveCropEvent(currentCropsData, cropsOffset);
-            OnPlacedCropEvent(currentCropsData);
+            GameObject newCrop = Instantiate(obj, cropsOffset, Quaternion.identity);
+
+            SaveCropData newCropData = new SaveCropData
+            {
+                CropData = currentCropsData,
+                CropLocation = cropsOffset,
+                GameTime = GameTimeManager.Instance.GetGameTimeInSec()
+            };
+
+            SavedCropScene.Instance.AddCropToSave(cellPos, newCropData);
+
+            OnPlacedCropEvent?.Invoke(currentCropsData); // optional event
         }
         else
         {
-            print("Cant place crops here");
+            Debug.Log("Can't place crop here!");
         }
     }
 }

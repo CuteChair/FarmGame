@@ -8,9 +8,11 @@ public class SavedCropScene : MonoBehaviour
 {
     public static SavedCropScene Instance;
 
-    public static event Action<List<SaveCropData>, float> OnMainMapSceneEvent;
+    public static event Action<Dictionary<Vector3Int, SaveCropData>, float> OnMainMapSceneEvent;
 
-    [SerializeField] private List<SaveCropData> CropsInScene = new List<SaveCropData>();
+    private Dictionary<Vector3Int, SaveCropData> cropsInScene = new Dictionary<Vector3Int, SaveCropData>();
+    public IReadOnlyDictionary<Vector3Int, SaveCropData> CropsInScene => cropsInScene;
+
 
     private void Awake()
     {
@@ -38,17 +40,16 @@ public class SavedCropScene : MonoBehaviour
     {
         if (scene.name == "MainMap")
         {
-            OnMainMapSceneEvent?.Invoke(CropsInScene, GameTimeManager.Instance.GetGameTimeInSec());
+            OnMainMapSceneEvent?.Invoke(cropsInScene, GameTimeManager.Instance.GetGameTimeInSec());
         }
     }
-
-    public void AddToSave(SaveCropData data)
+    public bool CheckForPosition(Vector3Int pos)
     {
-        CropsInScene.Add(data);
+      return cropsInScene.ContainsKey(pos);
     }
 
-    public void RemoveFromSave(SaveCropData data)
+    public void AddCropToSave(Vector3Int pos, SaveCropData data)
     {
-        CropsInScene.Remove(data);
+        cropsInScene[pos] = data;
     }
 }

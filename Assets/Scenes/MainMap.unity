@@ -194447,6 +194447,7 @@ MonoBehaviour:
   interactibleLayer:
     serializedVersion: 2
     m_Bits: 64
+  tilemap: {fileID: 482006125}
 --- !u!1 &482006122
 GameObject:
   m_ObjectHideFlags: 0
@@ -196610,7 +196611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1f2e24ccfd7d5499c65b191f701484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CropsInScene: []
 --- !u!4 &1005206826
 Transform:
   m_ObjectHideFlags: 0
