@@ -78,6 +78,7 @@ public class PlayerInventoryManager : MonoBehaviour
             {
                 slot.AddItem(itemToAdd);
                 Debug.Log($"Stacked {itemToAdd.name}");
+                print("QTY sent : " + slot.quantity);
                 return;
             }
         }

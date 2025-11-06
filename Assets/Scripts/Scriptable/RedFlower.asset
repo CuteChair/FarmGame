@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Red Flower
   ItemDescription: '- A docile plant with a spicy touch! -'
-  ItemIcon: {fileID: -2138668219, guid: 4ae18883b613deb459519e85e20a19ee, type: 3}
+  ItemIcon: {fileID: -1518671625, guid: eefaf9829225a5046834af2f98d06336, type: 3}
   ItemPrefab: {fileID: 6893295038111569440, guid: 9c37b69dcee2d0647934a08fb89043b9, type: 3}
   ItemMaxStack: 16
   ItemType: 0

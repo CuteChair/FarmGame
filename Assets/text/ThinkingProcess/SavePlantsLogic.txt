@@ -1,0 +1,36 @@
+- What do i need to save crops : 
+
+crop location
+crop ID (what is it?)
+cropTime (how long the crop needs to grow)
+
+when player place a crop : 
+
+-> add cropLocation
+-> add croppID
+-> add cropTime
+
+when player leaves scene : 
+
+-> note what currentCropTime is : 
+-> note what time it is (gameTime)
+
+when player comeback to main scene :
+
+-> find how much time has passed (timeLeft - timeEntered = timeElapsed)
+
+-> place plants where they need to be
+-> remove timeElapsed to their grow time
+
+SaveCropData : container for crops that needs to be saved
+
+SavedCropScene : Contains multiple SaveCropData will persist in between scenes
+- needs to listen when a player place a plant
+
+placedCropsLocation -> SavedCropScene
+placedCropsLoactions.Add();
+placedCropsLoaction.Contains();
+
+
+
+
