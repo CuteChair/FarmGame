@@ -15,12 +15,14 @@ public class PlayerInventoryManager : MonoBehaviour
     {
         PickableItem.OnPickedUpItem += AddItem;
         PlaceCrops.OnPlacedCropEvent += RemoveItem;
+        BuyingPlants.OnPlantBought += AddItem;
     }
 
     private void OnDisable()
     {
         PickableItem.OnPickedUpItem -= AddItem;
         PlaceCrops.OnPlacedCropEvent -= RemoveItem;
+        BuyingPlants.OnPlantBought -= AddItem;
     }
     private void Awake()
     {

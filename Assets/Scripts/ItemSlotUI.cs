@@ -26,12 +26,14 @@ public class ItemSlotUI : MonoBehaviour
     {
         PickableItem.OnPickedUpItem += AddItemToUI;
         PlaceCrops.OnPlacedCropEvent += RemoveItemFromUI;
+        BuyingPlants.OnPlantBought += AddItemToUI;
     }
 
     private void OnDisable()
     {
         PickableItem.OnPickedUpItem -= AddItemToUI;
         PlaceCrops.OnPlacedCropEvent -= RemoveItemFromUI;
+        BuyingPlants.OnPlantBought -= AddItemToUI;
     }
 
     private void AddItemToUI(ItemData data)

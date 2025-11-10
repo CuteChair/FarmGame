@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Data")]
+[CreateAssetMenu(fileName ="ItemData", menuName ="Data/ItemData", order = 1)]
 public class ItemData : ScriptableObject
 {
     public string ItemName;
-    public string ItemDescription;
     public Sprite ItemIcon;
     public GameObject ItemPrefab;
     public int ItemMaxStack;
